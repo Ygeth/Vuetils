@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@import "./vuebar.css";
+
+.flex-col-center {
+  @apply flex flex-col justify-center;
+}
+
+@tailwind utilities;

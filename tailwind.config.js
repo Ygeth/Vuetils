@@ -8,10 +8,14 @@ module.exports = {
       "-90": "rotate(-90deg)",
       "45": "rotate(45deg)",
       "90": "rotate(90deg)",
-      "135": "rotate(135deg)"
+      "135": "rotate(135deg)",
     },
     translateY: {
-      "8": "translateY(2rem)"
+      "8": "translateY(2rem)",
+      "50p": "translateY(50%)",
+    },
+    translate: {
+      "1/2": "translate(50%, 50%)",
     },
     transitionProperty: {
       none: "none",
@@ -21,7 +25,7 @@ module.exports = {
       border: "border-color",
       colors: ["color", "background-color", "border-color"],
       opacity: "opacity",
-      transform: "transform"
+      transform: "transform",
     },
     transitionDuration: {
       default: "250ms",
@@ -30,7 +34,9 @@ module.exports = {
       "250": "250ms",
       "500": "500ms",
       "750": "750ms",
-      "1000": "1000ms"
+      "1000": "1000ms",
+      "5000": "5000ms",
+      "1trillon": "626352531ms",
     },
     extend: {
       colors: {
@@ -42,32 +48,7 @@ module.exports = {
         darkShade: "#E5E5E5",
         gray: {
           ...colors.gray,
-          default: "#C4C4C4",
-          icon: "#938C8C",
-          "200": "#DEDBDB",
-          "500": "#99999a",
-          "600": "#535252"
         },
-        red: {
-          ...colors.red,
-          default: "#C1272D",
-          title: "#C13A40",
-          score: "#FB2807"
-        },
-        green: {
-          ...colors.green,
-          default: "#208010",
-          score: "#9AB648",
-          scoreMax: "#80E56F"
-        },
-        brown: {
-          ...colors.brown,
-          score: "#B39237"
-        },
-        orange: {
-          ...colors.orange,
-          score: "#D85B1E"
-        }
       },
       spacing: {
         "11": "2.75rem",
@@ -75,7 +56,7 @@ module.exports = {
         "14": "3.5rem",
         "15": "3.75rem",
         "17": "4.25rem",
-        "18": "4.5rem"
+        "18": "4.5rem",
       },
       inset: {
         "-1": "-0.25rem",
@@ -86,7 +67,7 @@ module.exports = {
         "-8": "-2rem",
         "-10": "-2.5rem",
         "2": "0.5rem",
-        full: "100%"
+        full: "100%",
       },
       borderWidth: {
         "6": "6px",
@@ -95,19 +76,19 @@ module.exports = {
         "18": "18px",
         "20": "20px",
         "22": "22px",
-        "24": "24px"
+        "24": "24px",
       },
       zIndex: {
-        "100": "100"
+        "100": "100",
       },
       minWidth: {
         "1/3": "33vh",
         "1/2": "50vh",
         "32": "32rem",
-        "h-9/10": "90vh"
+        "h-9/10": "90vh",
       },
       maxWidth: {
-        "5": "5rem"
+        "5": "5rem",
       },
       maxHeight: {
         "5000": "5000px",
@@ -118,10 +99,12 @@ module.exports = {
         "1/4": "25vh",
         "1/2": "50vh",
         "3/4": "75vh",
-        "9/10": "90vh"
+        "9/10": "90vh",
+        "1/2Griton": "5000px",
+        "1Griton": "10000px",
       },
       fontSize: {
-        "2xs": "0.6rem"
+        "2xs": "0.6rem",
       },
       height: {
         "28": "7rem",
@@ -131,15 +114,28 @@ module.exports = {
         "100": "25rem",
         "101": "25,25rem",
         "102": "25,5rem",
+        "1/2": "50%",
+        "1/3": "33.33%",
+        "2/3": "66.66%",
+        "1/4": "25%",
+        "2/4": "50%",
+        "3/4": "75%",
+        "1/5": "0.2%",
+        "2/5": "0.4%",
+        "3/5": "0.6%",
+        "4/5": "0.8%",
+        "1/8": "12.5%",
         "1/10": "10vh",
-        "1/5": "20vh",
-        "1/4": "25vh",
-        "1/2": "50vh",
-        "1/3": "33vh",
-        "2/3": "66vh",
-        "3/4": "75vh",
-        "4/5": "80vh",
-        "9/10": "90vh"
+        "9/10": "90vh",
+        "1/16": "6.25%",
+        "screen-1/2": "50vh",
+        "screen-2/4": "50vh",
+        "screen-1/4": "25vh",
+        "screen-1/8": "12.5vh",
+        "screen-3/4": "75vh",
+        "screen-1/16": "6.25vh",
+        "screen-15/16": "93.75vh",
+        "screen-6/8": "75vh",
       },
       width: {
         "45": "10.5rem",
@@ -153,9 +149,32 @@ module.exports = {
         "5/7": "71%",
         "6/7": "85%",
         "1/8": "12.5%",
-        "3/8": "37.5%"
-      }
-    }
+        "3/8": "37.5%",
+        grid: {
+          "1": "8.33%",
+          "2": "16.66%",
+          "3": "25%",
+          "4": "33.33%",
+          "5": "41.66%",
+          "6": "50% ",
+          "7": "58.33%",
+          "8": "66.66%",
+          "9": "75%",
+          "10": "83.33%",
+          "11": "91.66%",
+          "12": "100%",
+        },
+      },
+      right: {
+        "-3": "-0.75rem",
+      },
+      top: {
+        "1/2": "50%",
+      },
+      left: {
+        "1/2": "50%",
+      },
+    },
   },
   variants: {
     width: ["responsive", "hover"],
@@ -163,48 +182,36 @@ module.exports = {
     display: ["responsive", "hover", "group-hover"],
     maxWidth: ["hover"],
     backgroundColor: ["responsive", "hover", "focus", "odd"],
-    flexDirection: ["responsive"]
+    flexDirection: ["responsive"],
   },
   plugins: [
-    function({ addUtilities, config, e }) {
+    function ({ addUtilities, config, e }) {
       const rotations = config("theme.rotate");
       const translationsY = config("theme.translateY");
       const transitionProperties = config("theme.transitionProperty");
       const transitionDurations = config("theme.transitionDuration");
 
       const generateClasses = (objectName, propertyName, keyName) => {
-        return Object.keys(objectName).map(key => {
+        return Object.keys(objectName).map((key) => {
           let preString = key.charAt(0) === "-" ? "-" : "";
           let postString = preString ? key.slice(1) : key;
           return {
             [`.${e(`${preString}${keyName}-${postString}`)}`]: {
-              [propertyName]: objectName[key]
-            }
+              [propertyName]: objectName[key],
+            },
           };
         });
       };
 
       const rotateUtilities = generateClasses(rotations, "transform", "rotate");
-      const translationsYUtilities = generateClasses(
-        translationsY,
-        "transform",
-        "translate-y"
-      );
-      const transitionPropertiesUtilities = generateClasses(
-        transitionProperties,
-        "transition-property",
-        "transition-property"
-      );
-      const transitionDurationsUtilities = generateClasses(
-        transitionDurations,
-        "transition-duration",
-        "transition-duration"
-      );
+      const translationsYUtilities = generateClasses(translationsY, "transform", "translate-y");
+      const transitionPropertiesUtilities = generateClasses(transitionProperties, "transition-property", "transition-property");
+      const transitionDurationsUtilities = generateClasses(transitionDurations, "transition-duration", "transition-duration");
 
       addUtilities(rotateUtilities);
       addUtilities(translationsYUtilities);
       addUtilities(transitionPropertiesUtilities);
       addUtilities(transitionDurationsUtilities);
-    }
-  ]
+    },
+  ],
 };
