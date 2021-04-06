@@ -1,0 +1,40 @@
+{
+  "common": {
+    "patata": "Potato"
+  },
+  "forms": {
+    "password": "Password",
+    "passwordRepeat": "Password repeat",
+    "name": "name",
+    "address": {
+      "address": "Address",
+      "additionalAddressInfo": "Address(additional information)",
+      "direction": "Company address",
+      "edifice": "Building"
+    }
+  },
+  "errors": {
+    "generic": "An error occurred",
+    "loading": "Error while loading",
+    "search": "An error ocurred while searching",
+    "incorrectFieldA": "{field} is incorrect",
+    "requiredFieldA": "{field} is required",
+    "required": "Required field",
+  },
+  "helpers": {
+  },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  }
+}

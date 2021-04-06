@@ -1,100 +1,119 @@
-"use strict";
 
-const utils = [];
+// eslint-disable-next-line no-unused-vars
+export default {
+    data () {
+      return {
+        validationRules: {
+          required: v => !!v || 'Es necesario completar este campo',
+          requiredTime: v => !!v.time || 'Es necesario completar este campo',
+          requiredBoolean: v => !(!v && v!==false) || 'Es necesario completar este campo',
+          maxLength(v, maximum) { return (v || '').length <= maximum || 'El campo excede la longitud máxima permitida (' + maximum + ' caracteres)'; },
+          length(v, length) { return (v || '').length == length || `El campo debe tener ${length} caracteres`; },
+          rangeInt(v, minimum, maximum) { return ((v || '') >= minimum && (v || '') <= maximum) || 'El campo está fuera del rango permitido [ ' + minimum + ' - ' + maximum + ' ]'; },
+          rangeNumber(v, minimum, maximum) { return !v || /^[1-9]\d*(,\d+)?$/.test(v) && ((parseFloat(v) || '') >= minimum && (parseFloat(v) || '') <= maximum) || 'El campo está fuera del rango permitido [ ' + minimum + ' - ' + maximum + ' ]'; },
+          email: v => !v || /.+@.+\..+/.test(v) || 'No es1 un e-mail válido',
+          dni: v =>  !v || this.validateDNI(v) || 'No es un DNI/NIE válido',
+          cif: v => this.validateCIF(v) || 'No es un CIF válido',
+          dniOrCif: v => this.validateDNI(v) || this.validateCIF(v) || 'No es un CIF válido',
+          phone: v => !v || /^[0-9]{9}$/.test(v) || 'No es un teléfono válido',
+          int: v => !v || /^[0-9]\d*$/.test(v) || 'Es necesario que sea un positivo sin decimales'
+        },
+      }
+    },
 
-utils.returnJsonError = (code, element) => {
-  switch (code) {
-    case "AVERAGE_ERR":
-      return { err: "400", res: "Could not be get average compute." };
-    default:
-      return { err: "500", res: "Oops.." };
-  }
-};
+    methods: {
+      validateDNI (value) {
+        value = value ? value.toUpperCase().trim() : null;
+        // value = value.padStart(9, '0');
+        var esValido = /^([0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]|[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET])$/.test(value);
 
-utils.return = (code, element, result) => {
-  switch (code) {
-    case "BELONGS_COMPANY_ERR":
-      return result("400", element + " could not be checked.");
-    case "NOT_BELONGS_COMPANY":
-      return result("401", element + " not belongs your company.");
-    case "NOT_FOUND":
-      return result("404", element + " not found.");
-    case "OK":
-      return result("200");
-    case "TEST_TO_COMPARE_NOT_BELONGS_COMPANY":
-      return result("401", "Comparison test not belongs your company.");
-    case "TEST_NO_FINISHED":
-      return result("401", "Test is not finished.");
-    case "TEST_NO_FINISHED_ERR":
-      return result("500", "Test could not be is finished.");
-    case "NOT_BELONGS_TEST":
-      return result("401", element + " not belongs test.");
-    case "TOKEN_CHECK":
-      return result("401", "Already token is not valid.");
-    case "NOT_FOUND":
-      return result("404", element + " not found.");
-    case "TOKEN_CHECK_ERR":
-      return result("400", "Token could not be checked.");
-    case "BELONGS_TEST_ERR":
-      return result("400", element + " could not be checked.");
-    case "USER_ADMIN_ERR":
-      return result("400", element + " could not be checked.");
-    case "NEW_ERR":
-      return result("400", element + " could not be created.");
-    case "GET_ERR":
-      return result("400", element + " could not be found.");
-    case "GET_LIST_ERR":
-      return result("400", element + " list could not be retrieved.");
-    case "INSERT_ERR":
-      return result("400", element + " could not be inserted.");
-    case "UPDATE_ERR":
-      return result("400", element + " could not be updated.");
-    case "DELETE_ERR":
-      return result("400", element + " could not be deleted.");
-    case "CHANGE_PASSWD_ERR":
-      return result("400", element + " could not be changed password.");
-    case "AVERAGE_ERR":
-      return result("400", "Could not be get average compute..");
-    case "PERCENT_ERR":
-      return result("400", "Could not calculate the percentage");
-    default:
-      return result("500", "Oops..");
-  }
-};
+        if (esValido === false) {
+            return false;
+        }
 
-utils.renameKeys = (obj, newKeys) => {
-  const keyValues = Object.keys(obj).map((key) => {
-    const newKey = newKeys[key] || key;
-    return { [newKey]: obj[key] };
-  });
-  return Object.assign({}, ...keyValues);
-};
+        var letrasValidas = "TRWAGMYFPDXBNJZSQVHLCKET";
 
-utils.escape = (text) => {
-  return text;
-  // return (text) ? (new Buffer.from(text)).toString('base64') : text;
-};
+        var nie = value.replace(/^[X]/, '0').replace(/^[Y]/, '1').replace(/^[Z]/, '2');
 
-utils.unescape = (text) => {
-  return text;
-  // return (text) ? (new Buffer.from(text, 'base64')).toString('utf-8') : text;
-};
+        var letra1 = value.substr(-1);
+        var posicion = parseInt(nie.substr(0, 8)) % 23;
+        var letra2 = letrasValidas.charAt(posicion);
 
-utils.replaceTemplate = (rkeys, text) => {
-  const regex = /\${(.*?)}/gm;
-  _.each(text.match(regex), function (tag) {
-    let _tag = tag.replace(regex, `$1`);
-    text = rkeys[_tag] ? text.replace(tag, rkeys[_tag]) : text;
-  });
-  return text;
-};
+        return letra1 === letra2;
+      },
+      validateCIF (value) {
+        value = value ? value.toUpperCase().trim() : null;
+  
+        var esValido = /^[A-Z]{1}[0-9]{7}[A-J0-9]{1}$/.test(value);
+  
+        if (esValido === false) {
+            return false;
+        }
+  
+        var letrasValidas = "JABCDEFGHI";
+  
+        var digitos = value.substr(1, value.length - 2);
+        var letra = value.substr(0, 1);
+        var control = value.substr(value.length - 1);
+        var suma = 0;
+  
+        if (!letra.match(/[A-Z]/)) {
+          return false;
+        }
+  
+        for (var i = 0; i < digitos.length; i++) {
+          var digito = parseInt(digitos[i]);
+  
+          if (isNaN(digito)) {
+            return false;
+          }
+  
+          if (i % 2 === 0) {
+            digito *= 2;
+            if (digito > 9) {
+              digito = parseInt(digito / 10) + (digito % 10);
+            }
+  
+            suma += digito;
+          } else {
+            suma += digito;
+          }
+        }
+  
+        suma %= 10;
+        if (suma !== 0) {
+          digito = 10 - suma;
+        } else {
+          digito = suma;
+        }
+  
+        if (letra.match(/[ABEH]/)) {
+          return String(digito) === control;
+        }
+        if (letra.match(/[NPQRSW]/)) {
+          return letrasValidas[digito] === control;
+        }
+  
+        return String(digito) === control || letrasValidas[digito] === control;
+      },
 
-utils.getLang = (lang) => {
-  return _.contains(populate.getLang().langs, lang) ? lang : populate.getLang().default;
-};
+      removeAccents(str) {
+        var map = {
+          'a' : 'á|à|ã|â|À|Á|Ã|Â',
+          'e' : 'é|è|ê|É|È|Ê',
+          'i' : 'í|ì|î|Í|Ì|Î',
+          'o' : 'ó|ò|ô|õ|Ó|Ò|Ô|Õ',
+          'u' : 'ú|ù|û|ü|Ú|Ù|Û|Ü',
+          'c' : 'ç|Ç',
+          'n' : 'ñ|Ñ'
+        }
+        
+        for (var pattern in map) {
+          str = str.replace(new RegExp(map[pattern], 'g'), pattern)
+        }
 
-utils.round = (x, n = 2) => {
-  return parseFloat(Math.round(x * Math.pow(10, n)) / Math.pow(10, n)).toFixed(n);
-};
+        return str;
+      },
 
-module.exports = utils;
+    }
+}

@@ -1,0 +1,52 @@
+{
+  "common": {
+    "patata": "Patata"
+  },
+  "forms": {
+    "password": "Contraseña",
+    "passwordRepeat": "Repita la contraseña",
+    "name": "Nombre",
+    "surnames": "Apellidos",
+    "role": "Rol",
+    "address": {
+      "address": "Dirección",
+      "additionalAddressInfo": "Dirección (información adicional)",
+      "direction": "Dirección de empresa",
+      "edifice": "Edificio",
+      "street": "Calle"
+    }
+  },
+  "errors": {
+    "generic": "Ha ocurrido un error",
+    "loading": "Error al cargar",
+    "search": "Ocurrió un error mientras se buscaba",
+    "incorrectFieldO": "{field} es incorrecto",
+    "requiredFieldO": "{field} es requerido",
+    "required": "Campo requerido",
+    "requiredIn": "Campo requerido en",
+    "requiredFields": "Campos requeridos",
+    "incorrectFieldA": "{field} es incorrecta",
+    "requiredFieldA": "{field} es requerida",
+    "notMatchField": "{field} no coincide",
+    "notFound": "No encontrado",
+    "deleteConfirmationA": "¿Estás seguro de que quieres eliminar esta {that}?",
+    "deleteConfirmationO": "¿Estás seguro de que quieres eliminar este {that}?",
+    "deleteCorrectA": "La {that} se borró correctamente"
+  },
+  "helpers": {
+  },
+  "months": {
+    "january": "Enero",
+    "february": "Febrero",
+    "march": "Marzo",
+    "april": "Abril",
+    "may": "Mayo",
+    "june": "Junio",
+    "july": "Julio",
+    "august": "Agosto",
+    "september": "Septiembre",
+    "october": "Octubre",
+    "november": "Noviembre",
+    "december": "Diciembre"
+  }
+}
